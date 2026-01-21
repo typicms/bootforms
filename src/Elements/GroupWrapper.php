@@ -28,6 +28,13 @@ class GroupWrapper
         return $this;
     }
 
+    public function floating(): self
+    {
+        $this->formGroup->floating();
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return $this->render();

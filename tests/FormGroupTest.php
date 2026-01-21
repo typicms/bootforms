@@ -99,4 +99,16 @@ class FormGroupTest extends TestCase
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
+
+    public function testCanRenderWithFloatingLabels()
+    {
+        $label = $this->builder->label('Email');
+        $text = $this->builder->text('email');
+        $formGroup = new FormGroup($label, $text);
+        $formGroup->floating();
+
+        $expected = '<div class="mb-3 form-floating"><input type="text" name="email"><label class="form-label">Email</label></div>';
+        $result = $formGroup->render();
+        $this->assertEquals($expected, $result);
+    }
 }

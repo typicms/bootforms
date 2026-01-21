@@ -15,6 +15,8 @@ class FormGroup extends Element
 
     protected ?InvalidFeedback $invalidFeedback = null;
 
+    protected bool $isFloating = false;
+
     public function __construct(Label $label, Element $control)
     {
         $this->label = $label;
@@ -28,13 +30,26 @@ class FormGroup extends Element
         $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
-        $html .= $this->label;
-        $html .= $this->control;
+        if ($this->isFloating) {
+            $html .= $this->control;
+            $html .= $this->label;
+        } else {
+            $html .= $this->label;
+            $html .= $this->control;
+        }
         $html .= $this->renderInvalidFeedback();
         $html .= $this->renderFormText();
         $html .= '</div>';
 
         return $html;
+    }
+
+    public function floating(): ?self
+    {
+        $this->isFloating = true;
+        $this->addClass('form-floating');
+
+        return $this;
     }
 
     public function formText(string $text): ?self
