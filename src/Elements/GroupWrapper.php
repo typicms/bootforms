@@ -4,16 +4,13 @@ namespace TypiCMS\BootForms\Elements;
 
 use TypiCMS\Form\Elements\Element;
 
-class GroupWrapper
+class GroupWrapper implements \Stringable
 {
-    protected FormGroup $formGroup;
-
     protected Element $target;
 
-    public function __construct(FormGroup $formGroup)
+    public function __construct(protected FormGroup $formGroup)
     {
-        $this->formGroup = $formGroup;
-        $this->target = $formGroup->control();
+        $this->target = $this->formGroup->control();
     }
 
     public function render(): string
@@ -74,7 +71,7 @@ class GroupWrapper
             $this->formGroup->label()->addClass('form-label-required');
         }
 
-        call_user_func_array([$this->target, 'required'], [$conditional]);
+        $this->target->required(...[$conditional]);
 
         return $this;
     }
@@ -107,7 +104,7 @@ class GroupWrapper
         return $this;
     }
 
-    public function __call($method, $parameters): self
+    public function __call(string $method, array $parameters): self
     {
         call_user_func_array([$this->target, $method], $parameters);
 

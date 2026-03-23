@@ -2,23 +2,22 @@
 
 namespace TypiCMS\BootForms\Tests;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TypiCMS\BootForms\Elements\FormGroup;
 use TypiCMS\Form\FormBuilder;
 
-/**
- * @internal
- *
- * @coversNothing
- */
+#[CoversClass(FormGroup::class)]
 class FormGroupTest extends TestCase
 {
-    public function setUp(): void
+    private FormBuilder $builder;
+
+    protected function setUp(): void
     {
-        $this->builder = new FormBuilder();
+        $this->builder = new FormBuilder;
     }
 
-    public function testCanRenderBasicFormGroup()
+    public function test_can_render_basic_form_group(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -29,7 +28,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithPlaceholder()
+    public function test_can_render_with_placeholder(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -41,7 +40,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithValue()
+    public function test_can_render_with_value(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -53,7 +52,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithDefaultValue()
+    public function test_can_render_with_default_value(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -65,7 +64,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testDefaultValueNotAppliedIfAlreadyAValue()
+    public function test_default_value_not_applied_if_already_a_value(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -77,7 +76,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRenderWithFormText()
+    public function test_can_render_with_form_text(): void
     {
         $label = $this->builder->label('Email');
         $text = $this->builder->text('email');
@@ -89,7 +88,7 @@ class FormGroupTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanIncludeHtmlInLabels()
+    public function test_can_include_html_in_labels(): void
     {
         $label = $this->builder->label('<span>Email</span>');
         $text = $this->builder->text('email');

@@ -48,8 +48,7 @@ class InputGroup extends Text
         $html .= $this->renderAddons($this->beforeAddon);
         $html .= parent::render();
         $html .= $this->renderAddons($this->afterAddon);
-        $html .= '</div>';
 
-        return $html;
+        return $html.'</div>';
     }
 }

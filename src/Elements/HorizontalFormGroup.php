@@ -7,12 +7,9 @@ use TypiCMS\Form\Elements\Label;
 
 class HorizontalFormGroup extends FormGroup
 {
-    protected array $controlSizes;
-
-    public function __construct(Label $label, Element $control, array $controlSizes)
+    public function __construct(Label $label, Element $control, protected array $controlSizes)
     {
         parent::__construct($label, $control);
-        $this->controlSizes = $controlSizes;
         $this->addClass('row');
     }
 
@@ -22,15 +19,13 @@ class HorizontalFormGroup extends FormGroup
         $html .= $this->renderAttributes();
         $html .= '>';
         $html .= $this->label;
-        $html .= '<div class="' . $this->getControlClass() . '">';
+        $html .= '<div class="'.$this->getControlClass().'">';
         $html .= $this->control;
         $html .= $this->renderInvalidFeedback();
         $html .= $this->renderFormText();
         $html .= '</div>';
 
-        $html .= '</div>';
-
-        return $html;
+        return $html.'</div>';
     }
 
     protected function getControlClass(): string

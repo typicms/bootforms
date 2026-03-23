@@ -11,15 +11,7 @@ use TypiCMS\Form\FormBuilder;
 
 class HorizontalFormBuilder extends BasicFormBuilder
 {
-    protected array $columnSizes;
-
-    protected FormBuilder $builder;
-
-    public function __construct(FormBuilder $builder, array $columnSizes = ['lg' => [2, 10]])
-    {
-        $this->builder = $builder;
-        $this->columnSizes = $columnSizes;
-    }
+    public function __construct(protected FormBuilder $builder, protected array $columnSizes = ['lg' => [2, 10]]) {}
 
     public function setColumnSizes(array $columnSizes): self
     {

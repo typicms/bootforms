@@ -13,12 +13,7 @@ use TypiCMS\Form\FormBuilder;
 
 class BasicFormBuilder
 {
-    protected FormBuilder $builder;
-
-    public function __construct(FormBuilder $builder)
-    {
-        $this->builder = $builder;
-    }
+    public function __construct(protected FormBuilder $builder) {}
 
     protected function formGroup(string $label, string $name, mixed $control): GroupWrapper
     {
@@ -130,7 +125,7 @@ class BasicFormBuilder
 
     protected function buildRadioGroup(string $label, string $name, mixed $control): CheckGroup
     {
-        $id = $name . '_' . mb_strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $control->getAttribute('value'))));
+        $id = $name.'_'.mb_strtolower(trim((string) preg_replace('/[^A-Za-z0-9-]+/', '_', (string) $control->getAttribute('value'))));
         $label = $this->builder->label($label)->addClass('form-check-label')->forId($id);
         $control->id($id)->addClass('form-check-input');
 
@@ -191,9 +186,10 @@ class BasicFormBuilder
     public function inputGroup(string $label, string $name, ?string $value = null): GroupWrapper
     {
         $control = new InputGroup($name);
-        if (!is_null($value) || !is_null($value = $this->getValueFor($name))) {
+        if (! is_null($value) || ! is_null($value = $this->getValueFor($name))) {
             $control->value($value);
         }
+
         $control->addClass('form-control');
 
         return $this->formGroup($label, $name, $control);
@@ -206,7 +202,7 @@ class BasicFormBuilder
         return $this->formGroup($label, $name, $control);
     }
 
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         return call_user_func_array([$this->builder, $method], $parameters);
     }

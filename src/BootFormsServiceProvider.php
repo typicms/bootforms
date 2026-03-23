@@ -10,7 +10,7 @@ use TypiCMS\Form\OldInput\IlluminateOldInputProvider;
 
 class BootFormsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->registerErrorStore();
         $this->registerOldInput();
@@ -22,22 +22,18 @@ class BootFormsServiceProvider extends ServiceProvider implements DeferrableProv
 
     protected function registerErrorStore(): void
     {
-        $this->app->singleton('typicms.form.errorstore', function ($app) {
-            return new IlluminateErrorStore($app['session.store']);
-        });
+        $this->app->singleton('typicms.form.errorstore', fn ($app): IlluminateErrorStore => new IlluminateErrorStore($app['session.store']));
     }
 
     protected function registerOldInput(): void
     {
-        $this->app->singleton('typicms.form.oldinput', function ($app) {
-            return new IlluminateOldInputProvider($app['session.store']);
-        });
+        $this->app->singleton('typicms.form.oldinput', fn ($app): IlluminateOldInputProvider => new IlluminateOldInputProvider($app['session.store']));
     }
 
     protected function registerFormBuilder(): void
     {
-        $this->app->singleton('typicms.form', function ($app) {
-            $formBuilder = new FormBuilder();
+        $this->app->singleton('typicms.form', function (array $app): FormBuilder {
+            $formBuilder = new FormBuilder;
             $formBuilder->setErrorStore($app['typicms.form.errorstore']);
             $formBuilder->setOldInputProvider($app['typicms.form.oldinput']);
             $formBuilder->setToken($app['session.store']->token());
@@ -48,23 +44,17 @@ class BootFormsServiceProvider extends ServiceProvider implements DeferrableProv
 
     protected function registerBasicFormBuilder(): void
     {
-        $this->app->singleton('typicms.bootform.basic', function ($app) {
-            return new BasicFormBuilder($app['typicms.form']);
-        });
+        $this->app->singleton('typicms.bootform.basic', fn ($app): BasicFormBuilder => new BasicFormBuilder($app['typicms.form']));
     }
 
     protected function registerHorizontalFormBuilder(): void
     {
-        $this->app->singleton('typicms.bootform.horizontal', function ($app) {
-            return new HorizontalFormBuilder($app['typicms.form']);
-        });
+        $this->app->singleton('typicms.bootform.horizontal', fn ($app): HorizontalFormBuilder => new HorizontalFormBuilder($app['typicms.form']));
     }
 
     protected function registerBootForm(): void
     {
-        $this->app->singleton('typicms.bootform', function ($app) {
-            return new BootForm($app['typicms.bootform.basic'], $app['typicms.bootform.horizontal']);
-        });
+        $this->app->singleton('typicms.bootform', fn ($app): BootForm => new BootForm($app['typicms.bootform.basic'], $app['typicms.bootform.horizontal']));
     }
 
     /**

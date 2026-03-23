@@ -7,14 +7,8 @@ use TypiCMS\Form\Elements\Label;
 
 class CheckGroup extends FormGroup
 {
-    protected Label $label;
-
-    protected Element $control;
-
-    public function __construct(Label $label, Element $control)
+    public function __construct(protected Label $label, protected Element $control)
     {
-        $this->label = $label;
-        $this->control = $control;
         $this->addClass('form-check');
     }
 
@@ -27,9 +21,8 @@ class CheckGroup extends FormGroup
         $html .= $this->label;
         $html .= $this->renderInvalidFeedback();
         $html .= $this->renderFormText();
-        $html .= '</div>';
 
-        return $html;
+        return $html.'</div>';
     }
 
     public function inline(): self

@@ -8,15 +8,7 @@ class BootForm
 {
     protected BasicFormBuilder $builder;
 
-    protected BasicFormBuilder $basicFormBuilder;
-
-    protected HorizontalFormBuilder $horizontalFormBuilder;
-
-    public function __construct(BasicFormBuilder $basicFormBuilder, HorizontalFormBuilder $horizontalFormBuilder)
-    {
-        $this->basicFormBuilder = $basicFormBuilder;
-        $this->horizontalFormBuilder = $horizontalFormBuilder;
-    }
+    public function __construct(protected BasicFormBuilder $basicFormBuilder, protected HorizontalFormBuilder $horizontalFormBuilder) {}
 
     public function open(): FormOpen
     {
@@ -33,7 +25,7 @@ class BootForm
         return $this->builder->open();
     }
 
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         return call_user_func_array([$this->builder, $method], $parameters);
     }

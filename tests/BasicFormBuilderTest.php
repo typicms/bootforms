@@ -4,50 +4,49 @@ namespace TypiCMS\BootForms\Tests;
 
 use DateTime;
 use Mockery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypiCMS\BootForms\BasicFormBuilder;
+use TypiCMS\Form\ErrorStore\ErrorStoreInterface;
 use TypiCMS\Form\FormBuilder;
+use TypiCMS\Form\OldInput\OldInputInterface;
 
-/**
- * @internal
- *
- * @coversNothing
- */
+#[CoversClass(BasicFormBuilder::class)]
 class BasicFormBuilderTest extends TestCase
 {
-    private $form;
+    private BasicFormBuilder $form;
 
-    private $builder;
+    private FormBuilder $builder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->builder = new FormBuilder();
+        $this->builder = new FormBuilder;
         $this->form = new BasicFormBuilder($this->builder);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function testRenderTextGroup()
+    public function test_render_text_group(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithValue()
+    public function test_render_text_group_with_value(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email" value="example@example.com"></div>';
         $result = $this->form->text('Email', 'email')->value('example@example.com')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithError()
+    public function test_render_text_group_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Email is required.');
 
@@ -58,9 +57,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithErrorAndCustomFormText()
+    public function test_render_text_group_with_error_and_custom_form_text(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Email is required.');
 
@@ -71,9 +70,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithOldInput()
+    public function test_render_text_group_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('example@example.com');
 
@@ -84,9 +83,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithOldInputAndDefaultValue()
+    public function test_render_text_group_with_old_input_and_default_value(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('example@example.com');
 
@@ -97,22 +96,22 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithDefaultValue()
+    public function test_render_text_group_with_default_value(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email" value="test@test.com"></div>';
         $result = $this->form->text('Email', 'email')->defaultValue('test@test.com')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithOldInputAndError()
+    public function test_render_text_group_with_old_input_and_error(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('example@example.com');
 
         $this->builder->setOldInputProvider($oldInput);
 
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Email is required.');
 
@@ -123,16 +122,16 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderPasswordGroup()
+    public function test_render_password_group(): void
     {
         $expected = '<div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" name="password" class="form-control" id="password"></div>';
         $result = $this->form->password('Password', 'password')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderPasswordGroupDoesntKeepOldInput()
+    public function test_render_password_group_doesnt_keep_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('password');
 
@@ -143,9 +142,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderPasswordGroupWithError()
+    public function test_render_password_group_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Password is required.');
 
@@ -156,42 +155,42 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderButton()
+    public function test_render_button(): void
     {
         $expected = '<button type="button" class="btn btn-secondary">Click Me</button>';
         $result = $this->form->button('Click Me')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderButtonWithNameAndAlternateStyling()
+    public function test_render_button_with_name_and_alternate_styling(): void
     {
         $expected = '<button type="button" name="success" class="btn btn-success">Click Me</button>';
         $result = $this->form->button('Click Me', 'success', 'btn-success')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSubmit()
+    public function test_render_submit(): void
     {
         $expected = '<button type="submit" class="btn btn-primary">Submit</button>';
         $result = $this->form->submit()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSubmitWithAlternateStyling()
+    public function test_render_submit_with_alternate_styling(): void
     {
         $expected = '<button type="submit" class="btn btn-success">Submit</button>';
         $result = $this->form->submit('Submit', 'btn-success')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSubmitWithValue()
+    public function test_render_submit_with_value(): void
     {
         $expected = '<button type="submit" class="btn btn-success">Sign Up</button>';
         $result = $this->form->submit('Sign Up', 'btn-success')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSelect()
+    public function test_render_select(): void
     {
         $expected = '<div class="mb-3"><label for="color" class="form-label">Favorite Color</label><select name="color" class="form-select" id="color"><option value="1">Red</option><option value="2">Green</option><option value="3">Blue</option></select></div>';
 
@@ -200,7 +199,7 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSelectWithSelected()
+    public function test_render_select_with_selected(): void
     {
         $expected = '<div class="mb-3"><label for="color" class="form-label">Favorite Color</label><select name="color" class="form-select" id="color"><option value="1">Red</option><option value="2">Green</option><option value="3" selected>Blue</option></select></div>';
         $options = ['1' => 'Red', '2' => 'Green', '3' => 'Blue'];
@@ -208,9 +207,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSelectWithError()
+    public function test_render_select_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Color is required.');
 
@@ -223,9 +222,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderSelectWithOldInput()
+    public function test_render_select_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('2');
 
@@ -238,16 +237,16 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderCheckbox()
+    public function test_render_checkbox(): void
     {
         $expected = '<div class="form-check"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input"><label class="form-check-label" for="terms">Agree to Terms</label></div>';
         $result = $this->form->checkbox('Agree to Terms', 'terms')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderCheckboxWithError()
+    public function test_render_checkbox_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Must agree to terms.');
 
@@ -258,9 +257,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderCheckboxWithOldInput()
+    public function test_render_checkbox_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('1');
 
@@ -271,23 +270,23 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderCheckboxChecked()
+    public function test_render_checkbox_checked(): void
     {
         $expected = '<div class="form-check"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input" checked="checked"><label class="form-check-label" for="terms">Agree to Terms</label></div>';
         $result = $this->form->checkbox('Agree to Terms', 'terms')->check()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderRadio()
+    public function test_render_radio(): void
     {
         $expected = '<div class="form-check"><input type="radio" name="color" value="red" id="color_red" class="form-check-input"><label class="form-check-label" for="color_red">Red</label></div>';
         $result = $this->form->radio('Red', 'color', 'red')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderRadioWithError()
+    public function test_render_radio_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Sample error');
 
@@ -297,9 +296,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderRadioWithOldInput()
+    public function test_render_radio_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('red');
 
@@ -310,30 +309,30 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextarea()
+    public function test_render_textarea(): void
     {
         $expected = '<div class="mb-3"><label for="bio" class="form-label">Bio</label><textarea name="bio" rows="10" cols="50" class="form-control" id="bio"></textarea></div>';
         $result = $this->form->textarea('Bio', 'bio')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextareaWithRows()
+    public function test_render_textarea_with_rows(): void
     {
         $expected = '<div class="mb-3"><label for="bio" class="form-label">Bio</label><textarea name="bio" rows="5" cols="50" class="form-control" id="bio"></textarea></div>';
         $result = $this->form->textarea('Bio', 'bio')->rows(5)->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextareaWithCols()
+    public function test_render_textarea_with_cols(): void
     {
         $expected = '<div class="mb-3"><label for="bio" class="form-label">Bio</label><textarea name="bio" rows="10" cols="20" class="form-control" id="bio"></textarea></div>';
         $result = $this->form->textarea('Bio', 'bio')->cols(20)->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextareaWithOldInput()
+    public function test_render_textarea_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('Sample bio');
 
@@ -343,9 +342,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextareaWithError()
+    public function test_render_textarea_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Sample error');
 
@@ -355,98 +354,98 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineCheckboxFallback()
+    public function test_render_inline_checkbox_fallback(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input"><label class="form-check-label" for="terms">Agree to Terms</label></div>';
         $result = $this->form->inlineCheckbox('Agree to Terms', 'terms')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineCheckboxFallbackWithChaining()
+    public function test_render_inline_checkbox_fallback_with_chaining(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="checkbox" name="DJ" value="meal" id="DJ" class="form-check-input" chain="link" checked="checked"><label class="form-check-label" for="DJ">Checkit!</label></div>';
         $result = $this->form->inlineCheckbox('Checkit!', 'DJ')->value('meal')->chain('link')->check()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineCheckboxModifier()
+    public function test_render_inline_checkbox_modifier(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input"><label class="form-check-label" for="terms">Agree to Terms</label></div>';
         $result = $this->form->checkbox('Agree to Terms', 'terms')->inline()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineCheckboxModifierWithChaining()
+    public function test_render_inline_checkbox_modifier_with_chaining(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="checkbox" name="DJ" value="meal" id="DJ" class="form-check-input" chain="link" checked="checked"><label class="form-check-label" for="DJ">Checkit!</label></div>';
         $result = $this->form->checkbox('Checkit!', 'DJ')->inline()->value('meal')->chain('link')->check()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineRadioFallback()
+    public function test_render_inline_radio_fallback(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="radio" name="color" value="Red" id="color_red" class="form-check-input"><label class="form-check-label" for="color_red">Red</label></div>';
         $result = $this->form->inlineRadio('Red', 'color')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineRadioFallbackWithChaining()
+    public function test_render_inline_radio_fallback_with_chaining(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="radio" name="colour" value="Canada Red" id="colour_canada_red" class="form-check-input" chain="link" checked="checked"><label class="form-check-label" for="colour_canada_red">Canada Red</label></div>';
         $result = $this->form->inlineRadio('Canada Red', 'colour')->chain('link')->check()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineRadioModifier()
+    public function test_render_inline_radio_modifier(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="radio" name="color" value="Red" id="color_red" class="form-check-input"><label class="form-check-label" for="color_red">Red</label></div>';
         $result = $this->form->radio('Red', 'color')->inline()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineRadioModifierWithChaining()
+    public function test_render_inline_radio_modifier_with_chaining(): void
     {
         $expected = '<div class="form-check form-check-inline"><input type="radio" name="colour" value="Canada Red" id="colour_canada_red" class="form-check-input" chain="link" checked="checked"><label class="form-check-label" for="colour_canada_red">Canada Red</label></div>';
         $result = $this->form->radio('Canada Red', 'colour')->inline()->chain('link')->check()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInlineModifierOnUnsupportedElement()
+    public function test_render_inline_modifier_on_unsupported_element(): void
     {
         $expected = '<div class="mb-3"><label for="name" class="form-label">Name</label><input type="text" name="name" class="form-control" id="name" inline="inline"></div>';
         $result = $this->form->text('Name', 'name')->inline()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormOpen()
+    public function test_form_open(): void
     {
         $expected = '<form method="POST" action="">';
         $result = $this->form->open()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormOpenGet()
+    public function test_form_open_get(): void
     {
         $expected = '<form method="GET" action="">';
         $result = $this->form->open()->get()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormOpenCustomAction()
+    public function test_form_open_custom_action(): void
     {
         $expected = '<form method="POST" action="/login">';
         $result = $this->form->open()->action('/login')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormClose()
+    public function test_form_close(): void
     {
         $expected = '</form>';
         $result = $this->form->close();
         $this->assertEquals($expected, $result);
     }
 
-    public function testCsrfToken()
+    public function test_csrf_token(): void
     {
         $this->form->setToken('1234');
         $expected = '<input type="hidden" name="_token" value="1234">';
@@ -454,51 +453,51 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormOpenPut()
+    public function test_form_open_put(): void
     {
         $expected = '<form method="POST" action=""><input type="hidden" name="_method" value="PUT">';
         $result = $this->form->open()->put()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormOpenDelete()
+    public function test_form_open_delete(): void
     {
         $expected = '<form method="POST" action=""><input type="hidden" name="_method" value="DELETE">';
         $result = $this->form->open()->delete()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderDateGroup()
+    public function test_render_date_group(): void
     {
         $expected = '<div class="mb-3"><label for="birthday" class="form-label">Birthday</label><input type="date" name="birthday" class="form-control" id="birthday"></div>';
         $result = $this->form->date('Birthday', 'birthday')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderDateTimeLocalGroup()
+    public function test_render_date_time_local_group(): void
     {
         $expected = '<div class="mb-3"><label for="dob" class="form-label">Date & time of birth</label><input type="datetime-local" name="dob" class="form-control" id="dob"></div>';
         $result = $this->form->dateTimeLocal('Date & time of birth', 'dob')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderEmailGroup()
+    public function test_render_email_group(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="email" name="email" class="form-control" id="email"></div>';
         $result = $this->form->email('Email', 'email')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderFileGroup()
+    public function test_render_file_group(): void
     {
         $expected = '<div class="mb-3"><label for="file" class="form-label">File</label><input type="file" name="file" id="file" class="form-control"></div>';
         $result = $this->form->file('File', 'file')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderFileGroupWithError()
+    public function test_render_file_group_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Sample error');
 
@@ -508,7 +507,7 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddClassToUnderlyingControl()
+    public function test_can_add_class_to_underlying_control(): void
     {
         $expected = '<div class="mb-3"><label for="color" class="form-label">Favorite Color</label><select name="color" class="form-select my-class" id="color"><option value="1">Red</option><option value="2">Green</option><option value="3">Blue</option></select></div>';
 
@@ -517,14 +516,14 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderTextGroupWithLabelClass()
+    public function test_render_text_group_with_label_class(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label required">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->labelClass('required')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testBindObject()
+    public function test_bind_object(): void
     {
         $object = $this->getStubObject();
         $this->form->bind($object);
@@ -533,14 +532,14 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanHideLabels()
+    public function test_can_hide_labels(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label visually-hidden">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->hideLabel()->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRequiredLabels()
+    public function test_required_labels(): void
     {
         $expected = '<div class="mb-3"><label for="email" class="form-label form-label-required">Email</label><input type="text" name="email" class="form-control" id="email" required="required"></div>';
         $result = $this->form->text('Email', 'email')->required()->render();
@@ -551,42 +550,42 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanAddGroupClass()
+    public function test_can_add_group_class(): void
     {
         $expected = '<div class="mb-3 test-class"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->addGroupClass('test-class')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanRemoveGroupClass()
+    public function test_can_remove_group_class(): void
     {
         $expected = '<div><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->removeGroupClass('mb-3')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testCanSetGroupData()
+    public function test_can_set_group_data(): void
     {
         $expected = '<div class="mb-3" data-test="1"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>';
         $result = $this->form->text('Email', 'email')->groupData('test', 1)->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithBeforeAddon()
+    public function test_render_input_group_with_before_addon(): void
     {
         $expected = '<div class="mb-3"><label for="username" class="form-label">Username</label><div class="input-group">@<input type="text" name="username" class="form-control" id="username"></div></div>';
         $result = $this->form->inputGroup('Username', 'username')->beforeAddon('@')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithAfterAddon()
+    public function test_render_input_group_with_after_addon(): void
     {
         $expected = '<div class="mb-3"><label for="site" class="form-label">Site</label><div class="input-group"><input type="text" name="site" class="form-control" id="site">.com.br</div></div>';
         $result = $this->form->inputGroup('Site', 'site')->afterAddon('.com.br')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupChangeTypeWithBothAddon()
+    public function test_render_input_group_change_type_with_both_addon(): void
     {
         $expected = '<div class="mb-3"><label for="secret" class="form-label">Secret</label><div class="input-group">before<input type="password" name="secret" class="form-control" id="secret">after</div></div>';
         $result = $this->form
@@ -598,16 +597,16 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithValue()
+    public function test_render_input_group_with_value(): void
     {
         $expected = '<div class="mb-3"><label for="test" class="form-label">Test</label><div class="input-group"><input type="text" name="test" class="form-control" id="test" value="abc"></div></div>';
         $result = $this->form->inputGroup('Test', 'test')->value('abc')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithOldInput()
+    public function test_render_input_group_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('xyz');
 
@@ -618,9 +617,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithOldInputAndDefaultValue()
+    public function test_render_input_group_with_old_input_and_default_value(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('xyz');
 
@@ -631,22 +630,22 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithDefaultValue()
+    public function test_render_input_group_with_default_value(): void
     {
         $expected = '<div class="mb-3"><label for="test" class="form-label">Test</label><div class="input-group"><input type="text" name="test" class="form-control" id="test" value="acb"></div></div>';
         $result = $this->form->inputGroup('Test', 'test')->defaultValue('acb')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderInputGroupWithOldInputAndError()
+    public function test_render_input_group_with_old_input_and_error(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('abc');
 
         $this->builder->setOldInputProvider($oldInput);
 
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Test is required.');
 
@@ -657,7 +656,7 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testModifyingDifferentElementsOfAFormGroup()
+    public function test_modifying_different_elements_of_a_form_group(): void
     {
         $expected = '<div class="mb-3 foo" data-foo="bar"><label for="email" class="form-label bar" data-bar="baz">Email</label><input type="text" name="email" class="form-control baz" id="email" data-baz="foo"></div>';
         $result = $this->form->text('Email', 'email')
@@ -668,23 +667,23 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroup()
+    public function test_render_number_group(): void
     {
         $expected = '<div class="mb-3"><label for="number" class="form-label">Number</label><input type="number" name="number" class="form-control" id="number"></div>';
         $result = $this->form->number('Number', 'number')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithValue()
+    public function test_render_number_group_with_value(): void
     {
         $expected = '<div class="mb-3"><label for="number" class="form-label">Number</label><input type="number" name="number" class="form-control" id="number" value="15"></div>';
         $result = $this->form->number('Number', 'number')->value('15')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithError()
+    public function test_render_number_group_with_error(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Number is required.');
 
@@ -695,9 +694,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithErrorAndCustomFormText()
+    public function test_render_number_group_with_error_and_custom_form_text(): void
     {
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Number is required.');
 
@@ -708,9 +707,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithOldInput()
+    public function test_render_number_group_with_old_input(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('15');
 
@@ -721,9 +720,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithOldInputAndDefaultValue()
+    public function test_render_number_group_with_old_input_and_default_value(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('15');
 
@@ -734,22 +733,22 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithDefaultValue()
+    public function test_render_number_group_with_default_value(): void
     {
         $expected = '<div class="mb-3"><label for="number" class="form-label">Number</label><input type="number" name="number" class="form-control" id="number" value="15"></div>';
         $result = $this->form->number('Number', 'number')->defaultValue('15')->render();
         $this->assertEquals($expected, $result);
     }
 
-    public function testRenderNumberGroupWithOldInputAndError()
+    public function test_render_number_group_with_old_input_and_error(): void
     {
-        $oldInput = Mockery::mock('TypiCMS\Form\OldInput\OldInputInterface');
+        $oldInput = Mockery::mock(OldInputInterface::class);
         $oldInput->shouldReceive('hasOldInput')->andReturn(true);
         $oldInput->shouldReceive('getOldInput')->andReturn('18');
 
         $this->builder->setOldInputProvider($oldInput);
 
-        $errorStore = Mockery::mock('TypiCMS\Form\ErrorStore\ErrorStoreInterface');
+        $errorStore = Mockery::mock(ErrorStoreInterface::class);
         $errorStore->shouldReceive('hasError')->andReturn(true);
         $errorStore->shouldReceive('getError')->andReturn('Number is required.');
 
@@ -760,9 +759,9 @@ class BasicFormBuilderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    private function getStubObject()
+    private function getStubObject(): stdClass
     {
-        $obj = new stdClass();
+        $obj = new stdClass;
         $obj->email = 'johndoe@example.com';
         $obj->first_name = 'John';
         $obj->last_name = 'Doe';

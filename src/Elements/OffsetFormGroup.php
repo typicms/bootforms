@@ -2,28 +2,18 @@
 
 namespace TypiCMS\BootForms\Elements;
 
-class OffsetFormGroup
+class OffsetFormGroup implements \Stringable
 {
-    protected mixed $control;
-
-    protected array $columnSizes;
-
-    public function __construct(mixed $control, array $columnSizes)
-    {
-        $this->control = $control;
-        $this->columnSizes = $columnSizes;
-    }
+    public function __construct(protected mixed $control, protected array $columnSizes) {}
 
     public function render(): string
     {
         $html = '<div class="mb-3 row">';
-        $html .= '<div class="' . $this->getControlClass() . '">';
+        $html .= '<div class="'.$this->getControlClass().'">';
         $html .= $this->control;
         $html .= '</div>';
 
-        $html .= '</div>';
-
-        return $html;
+        return $html.'</div>';
     }
 
     public function setColumnSizes(array $columnSizes): self
@@ -48,7 +38,7 @@ class OffsetFormGroup
         return $this->render();
     }
 
-    public function __call($method, $parameters): self
+    public function __call(string $method, array $parameters): self
     {
         call_user_func_array([$this->control, $method], $parameters);
 

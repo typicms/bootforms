@@ -6,11 +6,8 @@ use TypiCMS\Form\Elements\Element;
 
 class InvalidFeedback extends Element
 {
-    private string $message;
-
-    public function __construct(string $message)
+    public function __construct(private readonly string $message)
     {
-        $this->message = $message;
         $this->addClass('invalid-feedback');
     }
 
@@ -20,8 +17,7 @@ class InvalidFeedback extends Element
         $html .= $this->renderAttributes();
         $html .= '>';
         $html .= $this->message;
-        $html .= '</div>';
 
-        return $html;
+        return $html.'</div>';
     }
 }

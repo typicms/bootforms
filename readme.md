@@ -1,8 +1,9 @@
 # BootForms
 
-[![Actions Status](https://github.com/TypiCMS/bootforms/workflows/run-tests/badge.svg)](https://github.com/TypiCMS/bootforms/actions)
-[![Coverage Status](https://coveralls.io/repos/github/TypiCMS/bootforms/badge.svg?branch=master)](https://coveralls.io/github/TypiCMS/bootforms?branch=master)
-[![StyleCI](https://styleci.io/repos/132662795/shield?branch=master)](https://styleci.io/repos/132662795)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/typicms/bootforms.svg)](https://packagist.org/packages/typicms/bootforms)
+[![tests](https://github.com/typicms/bootforms/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/typicms/bootforms/actions/workflows/tests.yml)
+[![Rector](https://github.com/typicms/bootforms/actions/workflows/rector.yml/badge.svg?branch=main)](https://github.com/typicms/bootforms/actions/workflows/rector.yml)
+[![Pint](https://github.com/typicms/bootforms/actions/workflows/pint.yml/badge.svg?branch=main)](https://github.com/typicms/bootforms/actions/workflows/pint.yml)
 
 BootForms was originally created by [Adam Wathan](https://github.com/adamwathan). It is build on top of the more general [Form](https://github.com/adamwathan/form) package by adding another layer of abstraction to rapidly generate markup for standard Bootstrap 5 forms. Probably not perfect for your super custom branded ready-for-release apps, but a _huge_ time saver when you are still in the prototyping stage!
 

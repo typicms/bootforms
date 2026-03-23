@@ -2,21 +2,14 @@
 
 namespace TypiCMS\BootForms\Tests;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TypiCMS\BootForms\Elements\InvalidFeedback;
 
-/**
- * @internal
- *
- * @coversNothing
- */
+#[CoversClass(InvalidFeedback::class)]
 class InvalidFeedbackTest extends TestCase
 {
-    public function setUp(): void
-    {
-    }
-
-    public function testCanRenderBasicInvalidFeedback()
+    public function test_can_render_basic_invalid_feedback(): void
     {
         $formText = new InvalidFeedback('Email is required.');
 

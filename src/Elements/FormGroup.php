@@ -7,19 +7,13 @@ use TypiCMS\Form\Elements\Label;
 
 class FormGroup extends Element
 {
-    protected Label $label;
-
-    protected Element $control;
-
     protected ?FormText $formText = null;
 
     protected ?InvalidFeedback $invalidFeedback = null;
 
-    public function __construct(Label $label, Element $control)
+    public function __construct(protected Label $label, protected Element $control)
     {
-        $this->label = $label;
         $this->label->addClass('form-label');
-        $this->control = $control;
         $this->addClass('mb-3');
     }
 
@@ -32,16 +26,16 @@ class FormGroup extends Element
         $html .= $this->control;
         $html .= $this->renderInvalidFeedback();
         $html .= $this->renderFormText();
-        $html .= '</div>';
 
-        return $html;
+        return $html.'</div>';
     }
 
     public function formText(string $text): ?self
     {
-        if (isset($this->formText)) {
+        if ($this->formText instanceof FormText) {
             return null;
         }
+
         $this->formText = new FormText($text);
 
         return $this;
@@ -49,7 +43,7 @@ class FormGroup extends Element
 
     protected function renderFormText(): string
     {
-        if ($this->formText) {
+        if ($this->formText instanceof FormText) {
             return $this->formText->render();
         }
 
@@ -58,9 +52,10 @@ class FormGroup extends Element
 
     public function invalidFeedback(string $text): ?self
     {
-        if (isset($this->invalidFeedback)) {
+        if ($this->invalidFeedback instanceof InvalidFeedback) {
             return null;
         }
+
         $this->invalidFeedback = new InvalidFeedback($text);
 
         return $this;
@@ -68,7 +63,7 @@ class FormGroup extends Element
 
     protected function renderInvalidFeedback(): string
     {
-        if ($this->invalidFeedback) {
+        if ($this->invalidFeedback instanceof InvalidFeedback) {
             return $this->invalidFeedback->render();
         }
 
