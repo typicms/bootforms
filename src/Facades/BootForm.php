@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TypiCMS\BootForms\Facades;
 
 use Illuminate\Support\Facades\Facade;

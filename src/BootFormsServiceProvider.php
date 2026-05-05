@@ -2,6 +2,7 @@
 
 namespace TypiCMS\BootForms;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Form\ErrorStore\IlluminateErrorStore;
@@ -29,17 +30,17 @@ class BootFormsServiceProvider extends ServiceProvider
 
     protected function registerErrorStore(): void
     {
-        $this->app->singleton('typicms.form.errorstore', fn ($app): IlluminateErrorStore => new IlluminateErrorStore($app['session.store']));
+        $this->app->singleton('typicms.form.errorstore', fn (Application $app): IlluminateErrorStore => new IlluminateErrorStore($app['session.store']));
     }
 
     protected function registerOldInput(): void
     {
-        $this->app->singleton('typicms.form.oldinput', fn ($app): IlluminateOldInputProvider => new IlluminateOldInputProvider($app['session.store']));
+        $this->app->singleton('typicms.form.oldinput', fn (Application $app): IlluminateOldInputProvider => new IlluminateOldInputProvider($app['session.store']));
     }
 
     protected function registerFormBuilder(): void
     {
-        $this->app->singleton('typicms.form', function ($app): FormBuilder {
+        $this->app->singleton('typicms.form', function (Application $app): FormBuilder {
             $formBuilder = new FormBuilder;
             $formBuilder->setErrorStore($app['typicms.form.errorstore']);
             $formBuilder->setOldInputProvider($app['typicms.form.oldinput']);
@@ -51,16 +52,16 @@ class BootFormsServiceProvider extends ServiceProvider
 
     protected function registerBasicFormBuilder(): void
     {
-        $this->app->singleton('typicms.bootform.basic', fn ($app): BasicFormBuilder => new BasicFormBuilder($app['typicms.form']));
+        $this->app->singleton('typicms.bootform.basic', fn (Application $app): BasicFormBuilder => new BasicFormBuilder($app['typicms.form']));
     }
 
     protected function registerHorizontalFormBuilder(): void
     {
-        $this->app->singleton('typicms.bootform.horizontal', fn ($app): HorizontalFormBuilder => new HorizontalFormBuilder($app['typicms.form']));
+        $this->app->singleton('typicms.bootform.horizontal', fn (Application $app): HorizontalFormBuilder => new HorizontalFormBuilder($app['typicms.form']));
     }
 
     protected function registerBootForm(): void
     {
-        $this->app->singleton('typicms.bootform', fn ($app): BootForm => new BootForm($app['typicms.bootform.basic'], $app['typicms.bootform.horizontal']));
+        $this->app->singleton('typicms.bootform', fn (Application $app): BootForm => new BootForm($app['typicms.bootform.basic'], $app['typicms.bootform.horizontal']));
     }
 }

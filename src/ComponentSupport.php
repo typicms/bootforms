@@ -12,7 +12,11 @@ class ComponentSupport
     {
         foreach ($attributes->getAttributes() as $key => $value) {
             if (in_array($key, self::BOOLEAN_ATTRIBUTES, true)) {
-                if ($value === false || $value === null) {
+                if ($value === false) {
+                    continue;
+                }
+
+                if ($value === null) {
                     continue;
                 }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TypiCMS\BootForms\Elements;
 
 use TypiCMS\Form\Elements\Element;
