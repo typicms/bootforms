@@ -39,7 +39,7 @@ class BootFormsServiceProvider extends ServiceProvider
 
     protected function registerFormBuilder(): void
     {
-        $this->app->singleton('typicms.form', function (array $app): FormBuilder {
+        $this->app->singleton('typicms.form', function ($app): FormBuilder {
             $formBuilder = new FormBuilder;
             $formBuilder->setErrorStore($app['typicms.form.errorstore']);
             $formBuilder->setOldInputProvider($app['typicms.form.oldinput']);
