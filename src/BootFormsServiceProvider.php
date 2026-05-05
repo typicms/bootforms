@@ -2,13 +2,13 @@
 
 namespace TypiCMS\BootForms;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use TypiCMS\Form\ErrorStore\IlluminateErrorStore;
 use TypiCMS\Form\FormBuilder;
 use TypiCMS\Form\OldInput\IlluminateOldInputProvider;
 
-class BootFormsServiceProvider extends ServiceProvider implements DeferrableProvider
+class BootFormsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -18,6 +18,13 @@ class BootFormsServiceProvider extends ServiceProvider implements DeferrableProv
         $this->registerBasicFormBuilder();
         $this->registerHorizontalFormBuilder();
         $this->registerBootForm();
+    }
+
+    public function boot(): void
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'bootform');
+
+        Blade::anonymousComponentNamespace('bootform::components', 'bootform');
     }
 
     protected function registerErrorStore(): void
@@ -55,13 +62,5 @@ class BootFormsServiceProvider extends ServiceProvider implements DeferrableProv
     protected function registerBootForm(): void
     {
         $this->app->singleton('typicms.bootform', fn ($app): BootForm => new BootForm($app['typicms.bootform.basic'], $app['typicms.bootform.horizontal']));
-    }
-
-    /**
-     * Get the services provided by the provider.
-     */
-    public function provides(): array
-    {
-        return ['typicms.bootform'];
     }
 }
