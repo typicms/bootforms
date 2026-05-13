@@ -65,7 +65,7 @@ class BasicFormBuilderTest extends TestCase
 
         $this->builder->setErrorStore($errorStore);
 
-        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div><small class="form-text">some custom text</small></div>';
+        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div><div class="form-text">some custom text</div></div>';
         $result = $this->form->text('Email', 'email')->formText('some custom text')->render();
         $this->assertEquals($expected, $result);
     }
@@ -702,7 +702,7 @@ class BasicFormBuilderTest extends TestCase
 
         $this->builder->setErrorStore($errorStore);
 
-        $expected = '<div class="mb-3"><label for="number" class="form-label">Number</label><input type="number" name="number" class="form-control is-invalid" id="number"><div class="invalid-feedback">Number is required.</div><small class="form-text">some custom text</small></div>';
+        $expected = '<div class="mb-3"><label for="number" class="form-label">Number</label><input type="number" name="number" class="form-control is-invalid" id="number"><div class="invalid-feedback">Number is required.</div><div class="form-text">some custom text</div></div>';
         $result = $this->form->number('Number', 'number')->formText('some custom text')->render();
         $this->assertEquals($expected, $result);
     }

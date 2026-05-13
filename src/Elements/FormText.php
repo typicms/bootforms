@@ -15,11 +15,11 @@ class FormText extends Element
 
     public function render(): string
     {
-        $html = '<small';
+        $html = '<div';
         $html .= $this->renderAttributes();
         $html .= '>';
         $html .= $this->message;
 
-        return $html.'</small>';
+        return $html.'</div>';
     }
 }

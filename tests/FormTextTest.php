@@ -15,13 +15,13 @@ class FormTextTest extends TestCase
     {
         $formText = new FormText('Email is required.');
 
-        $expected = '<small class="form-text">Email is required.</small>';
+        $expected = '<div class="form-text">Email is required.</div>';
         $result = $formText->render();
         $this->assertEquals($expected, $result);
 
         $formText = new FormText('First name is required.');
 
-        $expected = '<small class="form-text">First name is required.</small>';
+        $expected = '<div class="form-text">First name is required.</div>';
         $result = $formText->render();
         $this->assertEquals($expected, $result);
     }

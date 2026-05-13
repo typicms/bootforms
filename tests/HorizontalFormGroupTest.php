@@ -89,9 +89,9 @@ class HorizontalFormGroupTest extends TestCase
 
         $result = $group->render();
 
-        $this->assertStringContainsString('<small class="form-text">We will never share your email.</small>', $result);
+        $this->assertStringContainsString('<div class="form-text">We will never share your email.</div>', $result);
         $controlDivPos = strpos($result, '<div class="col-lg-10">');
-        $formTextPos = strpos($result, '<small class="form-text">');
+        $formTextPos = strpos($result, '<div class="form-text">');
         $this->assertGreaterThan($controlDivPos, $formTextPos, 'Form text must be inside the control column div');
     }
 

@@ -83,7 +83,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->formText('Email is required.');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email"><small class="form-text">Email is required.</small></div>';
+        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email"><div class="form-text">Email is required.</div></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }

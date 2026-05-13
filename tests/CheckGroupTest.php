@@ -97,7 +97,7 @@ class CheckGroupTest extends TestCase
 
         $result = $checkGroup->render();
 
-        $this->assertEquals('<div class="form-check"><input type="checkbox" name="accept" value="1" class="form-check-input"><label class="form-check-label">Accept</label><small class="form-text">Required to continue.</small></div>', $result);
+        $this->assertEquals('<div class="form-check"><input type="checkbox" name="accept" value="1" class="form-check-input"><label class="form-check-label">Accept</label><div class="form-text">Required to continue.</div></div>', $result);
     }
 
     public function test_magic_call_delegates_to_control(): void

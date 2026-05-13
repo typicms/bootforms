@@ -159,7 +159,7 @@ class GroupWrapperTest extends TestCase
         $wrapper = $this->makeWrapper();
         $wrapper->formText('Enter your email address.');
 
-        $this->assertStringContainsString('<small class="form-text">Enter your email address.</small>', $wrapper->render());
+        $this->assertStringContainsString('<div class="form-text">Enter your email address.</div>', $wrapper->render());
     }
 
     public function test_form_text_returns_self_for_chaining(): void
