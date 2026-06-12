@@ -6,21 +6,27 @@ use Illuminate\View\ComponentAttributeBag;
 
 class ComponentSupport
 {
-    private const BOOLEAN_ATTRIBUTES = ['required', 'disabled', 'readonly', 'autofocus', 'multiple', 'checked', 'selected'];
+    private const FLAG_METHODS = [
+        'required' => 'required',
+        'disabled' => 'disabled',
+        'readonly' => 'readonly',
+        'autofocus' => 'autofocus',
+        'multiple' => 'multiple',
+        'checked' => 'checked',
+        'selected' => 'selected',
+        'inline' => 'inline',
+        'hide-label' => 'hideLabel',
+    ];
 
     public static function apply(mixed $control, ComponentAttributeBag $attributes): mixed
     {
         foreach ($attributes->getAttributes() as $key => $value) {
-            if (in_array($key, self::BOOLEAN_ATTRIBUTES, true)) {
-                if ($value === false) {
+            if (array_key_exists($key, self::FLAG_METHODS)) {
+                if ($value === false || $value === null) {
                     continue;
                 }
 
-                if ($value === null) {
-                    continue;
-                }
-
-                $control->{$key}();
+                $control->{self::FLAG_METHODS[$key]}();
 
                 continue;
             }
@@ -30,6 +36,7 @@ class ComponentSupport
                 'group-class' => $control->addGroupClass($value),
                 'label-class' => $control->labelClass($value),
                 'help' => $control->formText($value),
+                'default-value' => $control->defaultValue($value),
                 default => $control->attribute($key, $value),
             };
         }
