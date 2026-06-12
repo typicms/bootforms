@@ -22,7 +22,11 @@ class ComponentSupport
     {
         foreach ($attributes->getAttributes() as $key => $value) {
             if (array_key_exists($key, self::FLAG_METHODS)) {
-                if ($value === false || $value === null) {
+                if ($value === false) {
+                    continue;
+                }
+
+                if ($value === null) {
                     continue;
                 }
 
