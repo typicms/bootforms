@@ -19,13 +19,13 @@ class CheckGroupTest extends TestCase
 
     public function test_renders_with_form_check_class(): void
     {
-        $label = $this->builder->label('Accept')->addClass('form-check-label');
+        $label = $this->builder->label('Accept');
         $control = $this->builder->checkbox('accept');
         $checkGroup = new CheckGroup($label, $control);
 
         $result = $checkGroup->render();
 
-        $this->assertEquals('<div class="form-check"><input type="checkbox" name="accept" value="1"><label class="form-check-label">Accept</label></div>', $result);
+        $this->assertEquals('<div class="form-field"><input type="checkbox" name="accept" value="1"><label>Accept</label></div>', $result);
     }
 
     public function test_renders_control_before_label(): void
@@ -46,14 +46,14 @@ class CheckGroupTest extends TestCase
 
     public function test_inline_adds_form_check_inline_class(): void
     {
-        $label = $this->builder->label('Accept')->addClass('form-check-label');
+        $label = $this->builder->label('Accept');
         $control = $this->builder->checkbox('accept');
         $checkGroup = new CheckGroup($label, $control);
         $checkGroup->inline();
 
         $result = $checkGroup->render();
 
-        $this->assertEquals('<div class="form-check form-check-inline"><input type="checkbox" name="accept" value="1"><label class="form-check-label">Accept</label></div>', $result);
+        $this->assertEquals('<div class="form-field d-inline-grid me-5"><input type="checkbox" name="accept" value="1"><label>Accept</label></div>', $result);
     }
 
     public function test_inline_returns_self_for_chaining(): void
@@ -78,26 +78,26 @@ class CheckGroupTest extends TestCase
 
     public function test_renders_with_invalid_feedback(): void
     {
-        $label = $this->builder->label('Accept')->addClass('form-check-label');
-        $control = $this->builder->checkbox('accept')->addClass('form-check-input');
+        $label = $this->builder->label('Accept');
+        $control = $this->builder->checkbox('accept')->addClass('check');
         $checkGroup = new CheckGroup($label, $control);
         $checkGroup->invalidFeedback('You must accept the terms.');
 
         $result = $checkGroup->render();
 
-        $this->assertEquals('<div class="form-check"><input type="checkbox" name="accept" value="1" class="form-check-input"><label class="form-check-label">Accept</label><div class="invalid-feedback">You must accept the terms.</div></div>', $result);
+        $this->assertEquals('<div class="form-field"><input type="checkbox" name="accept" value="1" class="check"><label>Accept</label><div class="invalid-feedback">You must accept the terms.</div></div>', $result);
     }
 
     public function test_renders_with_form_text(): void
     {
-        $label = $this->builder->label('Accept')->addClass('form-check-label');
-        $control = $this->builder->checkbox('accept')->addClass('form-check-input');
+        $label = $this->builder->label('Accept');
+        $control = $this->builder->checkbox('accept')->addClass('check');
         $checkGroup = new CheckGroup($label, $control);
         $checkGroup->formText('Required to continue.');
 
         $result = $checkGroup->render();
 
-        $this->assertEquals('<div class="form-check"><input type="checkbox" name="accept" value="1" class="form-check-input"><label class="form-check-label">Accept</label><div class="form-text">Required to continue.</div></div>', $result);
+        $this->assertEquals('<div class="form-field"><input type="checkbox" name="accept" value="1" class="check"><label>Accept</label><div class="form-text">Required to continue.</div></div>', $result);
     }
 
     public function test_magic_call_delegates_to_control(): void
@@ -132,6 +132,6 @@ class CheckGroupTest extends TestCase
 
         $result = $checkGroup->render();
 
-        $this->assertStringContainsString('class="form-check custom-class"', $result);
+        $this->assertStringContainsString('class="form-field custom-class"', $result);
     }
 }

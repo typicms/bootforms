@@ -58,22 +58,22 @@ class HorizontalFormBuilder extends BasicFormBuilder
     {
         $class = '';
         foreach ($this->columnSizes as $breakpoint => $sizes) {
-            $class .= sprintf('col-%s-%s ', $breakpoint, $sizes[0]);
+            $class .= sprintf('%s:col-%s ', $breakpoint, $sizes[0]);
         }
 
         return trim($class);
     }
 
-    public function button(string $value, ?string $name = null, string $type = 'btn-secondary'): OffsetFormGroup
+    public function button(string $value, ?string $name = null, string $type = 'btn-solid theme-secondary'): OffsetFormGroup
     {
-        $button = $this->builder->button($value, $name)->addClass('btn')->addClass($type);
+        $button = $this->builder->button($value, $name)->addClass($type);
 
         return new OffsetFormGroup($button, $this->columnSizes);
     }
 
-    public function submit(string $value = 'Submit', string $type = 'btn-primary'): OffsetFormGroup
+    public function submit(string $value = 'Submit', string $type = 'btn-solid theme-primary'): OffsetFormGroup
     {
-        $button = $this->builder->submit($value)->addClass('btn')->addClass($type);
+        $button = $this->builder->submit($value)->addClass($type);
 
         return new OffsetFormGroup($button, $this->columnSizes);
     }
@@ -88,8 +88,8 @@ class HorizontalFormBuilder extends BasicFormBuilder
 
     protected function checkGroup(string $label, string $name, mixed $control): CheckGroup
     {
-        $label = $this->builder->label($label)->addClass('form-check-label')->forId($name);
-        $control->id($name)->addClass('form-check-input');
+        $label = $this->builder->label($label)->forId($name);
+        $control->id($name)->addClass($control->getAttribute('type') === 'radio' ? 'radio' : 'check');
 
         $checkGroup = new CheckGroup($label, $control);
 

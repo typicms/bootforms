@@ -23,7 +23,7 @@ class FormGroupTest extends TestCase
         $text = $this->builder->text('email');
         $formGroup = new FormGroup($label, $text);
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email"></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -35,7 +35,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->placeholder('email address');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email" placeholder="email address"></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email" placeholder="email address"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -47,7 +47,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->value('example@example.com');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email" value="example@example.com"></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email" value="example@example.com"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -59,7 +59,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->defaultValue('example@example.com');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email" value="example@example.com"></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email" value="example@example.com"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -71,7 +71,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->value('test@test.com')->defaultValue('example@example.com');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email" value="test@test.com"></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email" value="test@test.com"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -83,7 +83,7 @@ class FormGroupTest extends TestCase
         $formGroup = new FormGroup($label, $text);
         $formGroup->formText('Email is required.');
 
-        $expected = '<div class="mb-3"><label class="form-label">Email</label><input type="text" name="email"><div class="form-text">Email is required.</div></div>';
+        $expected = '<div class="mb-5"><label class="form-label">Email</label><input type="text" name="email"><div class="form-text">Email is required.</div></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }
@@ -94,7 +94,7 @@ class FormGroupTest extends TestCase
         $text = $this->builder->text('email');
         $formGroup = new FormGroup($label, $text);
 
-        $expected = '<div class="mb-3"><label class="form-label"><span>Email</span></label><input type="text" name="email"></div>';
+        $expected = '<div class="mb-5"><label class="form-label"><span>Email</span></label><input type="text" name="email"></div>';
         $result = $formGroup->render();
         $this->assertEquals($expected, $result);
     }

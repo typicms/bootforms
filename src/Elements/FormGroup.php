@@ -14,7 +14,7 @@ class FormGroup extends Element
     public function __construct(protected Label $label, protected Element $control)
     {
         $this->label->addClass('form-label');
-        $this->addClass('mb-3');
+        $this->addClass('mb-5');
     }
 
     public function render(): string

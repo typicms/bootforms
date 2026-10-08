@@ -9,7 +9,7 @@ class CheckGroup extends FormGroup
 {
     public function __construct(protected Label $label, protected Element $control)
     {
-        $this->addClass('form-check');
+        $this->addClass('form-field');
     }
 
     public function render(): string
@@ -27,7 +27,7 @@ class CheckGroup extends FormGroup
 
     public function inline(): self
     {
-        $this->addClass('form-check-inline');
+        $this->addClass('d-inline-grid me-5');
 
         return $this;
     }

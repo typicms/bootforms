@@ -32,7 +32,7 @@ class HorizontalFormGroup extends FormGroup
     {
         $class = '';
         foreach ($this->controlSizes as $breakpoint => $size) {
-            $class .= sprintf('col-%s-%s ', $breakpoint, $size);
+            $class .= sprintf('%s:col-%s ', $breakpoint, $size);
         }
 
         return trim($class);

@@ -49,19 +49,19 @@ class BasicFormBuilder
         return $this->formGroup($label, $name, $control);
     }
 
-    public function button(string $value, ?string $name = null, string $type = 'btn-secondary'): Element|OffsetFormGroup
+    public function button(string $value, ?string $name = null, string $type = 'btn-solid theme-secondary'): Element|OffsetFormGroup
     {
-        return $this->builder->button($value, $name)->addClass('btn')->addClass($type);
+        return $this->builder->button($value, $name)->addClass($type);
     }
 
-    public function submit(string $value = 'Submit', string $type = 'btn-primary'): Element|OffsetFormGroup
+    public function submit(string $value = 'Submit', string $type = 'btn-solid theme-primary'): Element|OffsetFormGroup
     {
-        return $this->builder->submit($value)->addClass('btn')->addClass($type);
+        return $this->builder->submit($value)->addClass($type);
     }
 
     public function select(string $label, string $name, array $options = []): GroupWrapper
     {
-        $control = $this->builder->select($name, $options)->addClass('form-select');
+        $control = $this->builder->select($name, $options)->addClass('form-control');
 
         return $this->formGroup($label, $name, $control);
     }
@@ -87,8 +87,8 @@ class BasicFormBuilder
 
     protected function buildCheckGroup(string $label, string $name, mixed $control): CheckGroup
     {
-        $label = $this->builder->label($label)->addClass('form-check-label')->forId($name);
-        $control->id($name)->addClass('form-check-input');
+        $label = $this->builder->label($label)->forId($name);
+        $control->id($name)->addClass('check');
 
         $checkGroup = new CheckGroup($label, $control);
 
@@ -126,8 +126,8 @@ class BasicFormBuilder
     protected function buildRadioGroup(string $label, string $name, mixed $control): CheckGroup
     {
         $id = $name.'_'.mb_strtolower(trim((string) preg_replace('/[^A-Za-z0-9-]+/', '_', (string) $control->getAttribute('value'))));
-        $label = $this->builder->label($label)->addClass('form-check-label')->forId($id);
-        $control->id($id)->addClass('form-check-input');
+        $label = $this->builder->label($label)->forId($id);
+        $control->id($id)->addClass('radio');
 
         $checkGroup = new CheckGroup($label, $control);
 

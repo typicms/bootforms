@@ -31,7 +31,7 @@ class GroupWrapperTest extends TestCase
     {
         $wrapper = $this->makeWrapper();
 
-        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" id="email"></div>';
+        $expected = '<div class="mb-5"><label for="email" class="form-label">Email</label><input type="text" name="email" id="email"></div>';
 
         $this->assertEquals($expected, $wrapper->render());
     }
@@ -40,7 +40,7 @@ class GroupWrapperTest extends TestCase
     {
         $wrapper = $this->makeWrapper();
 
-        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" id="email"></div>';
+        $expected = '<div class="mb-5"><label for="email" class="form-label">Email</label><input type="text" name="email" id="email"></div>';
 
         $this->assertEquals($expected, (string) $wrapper);
     }
@@ -50,7 +50,7 @@ class GroupWrapperTest extends TestCase
         $wrapper = $this->makeWrapper();
         $wrapper->addGroupClass('custom-class');
 
-        $this->assertStringContainsString('class="mb-3 custom-class"', $wrapper->render());
+        $this->assertStringContainsString('class="mb-5 custom-class"', $wrapper->render());
     }
 
     public function test_add_group_class_returns_self_for_chaining(): void
@@ -63,16 +63,16 @@ class GroupWrapperTest extends TestCase
     public function test_remove_group_class_removes_class_from_form_group(): void
     {
         $wrapper = $this->makeWrapper();
-        $wrapper->removeGroupClass('mb-3');
+        $wrapper->removeGroupClass('mb-5');
 
-        $this->assertStringNotContainsString('mb-3', $wrapper->render());
+        $this->assertStringNotContainsString('mb-5', $wrapper->render());
     }
 
     public function test_remove_group_class_returns_self_for_chaining(): void
     {
         $wrapper = $this->makeWrapper();
 
-        $this->assertSame($wrapper, $wrapper->removeGroupClass('mb-3'));
+        $this->assertSame($wrapper, $wrapper->removeGroupClass('mb-5'));
     }
 
     public function test_group_data_adds_data_attribute_to_form_group(): void
@@ -189,7 +189,7 @@ class GroupWrapperTest extends TestCase
         $wrapper = $this->makeWrapper();
         $wrapper->group()->addClass('group-class');
 
-        $this->assertStringContainsString('class="mb-3 group-class"', $wrapper->render());
+        $this->assertStringContainsString('class="mb-5 group-class"', $wrapper->render());
     }
 
     public function test_label_switches_target_to_label(): void

@@ -45,7 +45,7 @@ class BootFormTest extends TestCase
         $this->bootForm->open();
         $result = $this->bootForm->text('Email', 'email')->render();
 
-        $this->assertEquals('<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>', $result);
+        $this->assertEquals('<div class="mb-5"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control" id="email"></div>', $result);
     }
 
     public function test_open_horizontal_returns_a_form_open_element(): void
@@ -60,7 +60,7 @@ class BootFormTest extends TestCase
         $this->bootForm->openHorizontal(['lg' => [2, 10]]);
         $result = $this->bootForm->text('Email', 'email')->render();
 
-        $this->assertEquals('<div class="mb-3 row"><label class="col-lg-2 col-form-label form-label" for="email">Email</label><div class="col-lg-10"><input type="text" name="email" class="form-control" id="email"></div></div>', $result);
+        $this->assertEquals('<div class="mb-5 row"><label class="lg:col-2 col-form-label form-label" for="email">Email</label><div class="lg:col-10"><input type="text" name="email" class="form-control" id="email"></div></div>', $result);
     }
 
     public function test_open_horizontal_applies_custom_column_sizes(): void
@@ -68,7 +68,7 @@ class BootFormTest extends TestCase
         $this->bootForm->openHorizontal(['lg' => [3, 9]]);
         $result = $this->bootForm->text('Email', 'email')->render();
 
-        $this->assertEquals('<div class="mb-3 row"><label class="col-lg-3 col-form-label form-label" for="email">Email</label><div class="col-lg-9"><input type="text" name="email" class="form-control" id="email"></div></div>', $result);
+        $this->assertEquals('<div class="mb-5 row"><label class="lg:col-3 col-form-label form-label" for="email">Email</label><div class="lg:col-9"><input type="text" name="email" class="form-control" id="email"></div></div>', $result);
     }
 
     public function test_close_renders_closing_form_tag(): void
@@ -91,7 +91,7 @@ class BootFormTest extends TestCase
     {
         $this->bootForm->open();
 
-        $expected = '<div class="mb-3"><label for="username" class="form-label">Username</label><input type="text" name="username" class="form-control" id="username"></div>';
+        $expected = '<div class="mb-5"><label for="username" class="form-label">Username</label><input type="text" name="username" class="form-control" id="username"></div>';
         $result = $this->bootForm->text('Username', 'username')->render();
 
         $this->assertEquals($expected, $result);
@@ -101,7 +101,7 @@ class BootFormTest extends TestCase
     {
         $this->bootForm->open();
 
-        $expected = '<div class="form-check"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input"><label class="form-check-label" for="terms">Agree to Terms</label></div>';
+        $expected = '<div class="form-field"><input type="checkbox" name="terms" value="1" id="terms" class="check"><label for="terms">Agree to Terms</label></div>';
         $result = $this->bootForm->checkbox('Agree to Terms', 'terms')->render();
 
         $this->assertEquals($expected, $result);
@@ -111,7 +111,7 @@ class BootFormTest extends TestCase
     {
         $this->bootForm->open();
 
-        $expected = '<button type="submit" class="btn btn-primary">Submit</button>';
+        $expected = '<button type="submit" class="btn-solid theme-primary">Submit</button>';
         $result = $this->bootForm->submit()->render();
 
         $this->assertEquals($expected, $result);
@@ -121,7 +121,7 @@ class BootFormTest extends TestCase
     {
         $this->bootForm->openHorizontal(['lg' => [2, 10]]);
 
-        $expected = '<div class="mb-3 row"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-primary">Submit</button></div></div>';
+        $expected = '<div class="mb-5 row"><div class="lg:offset-2 lg:col-10"><button type="submit" class="btn-solid theme-primary">Submit</button></div></div>';
         $result = $this->bootForm->submit()->render();
 
         $this->assertEquals($expected, $result);
@@ -131,7 +131,7 @@ class BootFormTest extends TestCase
     {
         $this->bootForm->openHorizontal(['lg' => [2, 10]]);
 
-        $expected = '<div class="mb-3 row"><div class="col-lg-offset-2 col-lg-10"><div class="form-check"><input type="checkbox" name="terms" value="1" id="terms" class="form-check-input"><label class="form-check-label" for="terms">Agree to Terms</label></div></div></div>';
+        $expected = '<div class="mb-5 row"><div class="lg:offset-2 lg:col-10"><div class="form-field"><input type="checkbox" name="terms" value="1" id="terms" class="check"><label for="terms">Agree to Terms</label></div></div></div>';
         $result = $this->bootForm->checkbox('Agree to Terms', 'terms')->render();
 
         $this->assertEquals($expected, $result);
@@ -147,7 +147,7 @@ class BootFormTest extends TestCase
 
         $this->bootForm->open();
 
-        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div></div>';
+        $expected = '<div class="mb-5"><label for="email" class="form-label">Email</label><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div></div>';
         $result = $this->bootForm->text('Email', 'email')->render();
 
         $this->assertEquals($expected, $result);
@@ -163,7 +163,7 @@ class BootFormTest extends TestCase
 
         $this->bootForm->openHorizontal(['lg' => [2, 10]]);
 
-        $expected = '<div class="mb-3 row"><label class="col-lg-2 col-form-label form-label" for="email">Email</label><div class="col-lg-10"><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div></div></div>';
+        $expected = '<div class="mb-5 row"><label class="lg:col-2 col-form-label form-label" for="email">Email</label><div class="lg:col-10"><input type="text" name="email" class="form-control is-invalid" id="email"><div class="invalid-feedback">Email is required.</div></div></div>';
         $result = $this->bootForm->text('Email', 'email')->render();
 
         $this->assertEquals($expected, $result);
@@ -179,7 +179,7 @@ class BootFormTest extends TestCase
 
         $this->bootForm->open();
 
-        $expected = '<div class="mb-3"><label for="email" class="form-label">Email</label><input type="text" name="email" value="user@example.com" class="form-control" id="email"></div>';
+        $expected = '<div class="mb-5"><label for="email" class="form-label">Email</label><input type="text" name="email" value="user@example.com" class="form-control" id="email"></div>';
         $result = $this->bootForm->text('Email', 'email')->render();
 
         $this->assertEquals($expected, $result);

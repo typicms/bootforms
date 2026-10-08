@@ -5,7 +5,7 @@
 [![Rector](https://github.com/typicms/bootforms/actions/workflows/rector.yml/badge.svg?branch=main)](https://github.com/typicms/bootforms/actions/workflows/rector.yml)
 [![Pint](https://github.com/typicms/bootforms/actions/workflows/pint.yml/badge.svg?branch=main)](https://github.com/typicms/bootforms/actions/workflows/pint.yml)
 
-BootForms was originally created by [Adam Wathan](https://github.com/adamwathan). It is build on top of the more general [Form](https://github.com/adamwathan/form) package by adding another layer of abstraction to rapidly generate markup for standard Bootstrap 5 forms. Probably not perfect for your super custom branded ready-for-release apps, but a _huge_ time saver when you are still in the prototyping stage!
+BootForms was originally created by [Adam Wathan](https://github.com/adamwathan). It is build on top of the more general [Form](https://github.com/adamwathan/form) package by adding another layer of abstraction to rapidly generate markup for standard Bootstrap 6 forms. Probably not perfect for your super custom branded ready-for-release apps, but a _huge_ time saver when you are still in the prototyping stage!
 
 - [Installation](#installing-with-composer)
 - [Using BootForms](#using-bootforms)
@@ -81,7 +81,7 @@ BootForms lets you create a label and form control and wrap it all in a form gro
 
 ```php
 //  <form method="post">
-//    <div class="mb-3">
+//    <div class="mb-5">
 //      <label for="field_name" class="form-label">Field Label</label>
 //      <input type="text" class="form-control" id="field_name" name="field_name">
 //    </div>
@@ -100,15 +100,15 @@ If you need to customize your form elements in any way (such as adding a default
 Attributes can be added either via the `attribute` method, or by simply using the attribute name as the method name.
 
 ```php
-// <div class="mb-3">
+// <div class="mb-5">
 //    <label for="first_name" class="form-label">First Name</label>
 //    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="John Doe">
 // </div>
 BootForm::text('First Name', 'first_name')->placeholder('John Doe');
 
-// <div class="mb-3">
+// <div class="mb-5">
 //   <label for="color" class="form-label">Color</label>
-//   <select class="form-select" id="color" name="color">
+//   <select class="form-control" id="color" name="color">
 //     <option value="red">Red</option>
 //     <option value="green" selected>Green</option>
 //   </select>
@@ -118,7 +118,7 @@ BootForm::select('Color', 'color')->options(['red' => 'Red', 'green' => 'Green']
 // <form method="GET" action="/users">
 BootForm::open()->get()->action('/users');
 
-// <div class="mb-3">
+// <div class="mb-5">
 //    <label for="first_name" class="form-label">First Name</label>
 //    <input type="text" class="form-control" id="first_name" name="first_name" value="John Doe">
 // </div>
@@ -133,27 +133,27 @@ Typical Bootstrap form boilerplate might look something like this:
 
 ```html
 <form>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="first_name" class="form-label">First Name</label>
     <input type="text" class="form-control" name="first_name" id="first_name" />
   </div>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="last_name" class="form-label">Last Name</label>
     <input type="text" class="form-control" name="last_name" id="last_name" />
   </div>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="date_of_birth" class="form-label">Date of Birth</label>
     <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" />
   </div>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="email" class="form-label">Email address</label>
     <input type="email" class="form-control" name="email" id="email" />
   </div>
-  <div class="mb-3">
+  <div class="mb-5">
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" name="password" id="password" />
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn-solid theme-primary">Submit</button>
 </form>
 ```
 
@@ -175,7 +175,7 @@ BootForms makes a few decisions for you and allows you to pare it down a bit mor
 Bootforms allows you to create input groups.
 
 ```php
-//  <div class="mb-3">
+//  <div class="mb-5">
 //      <label for="amount" class="form-label">Amount</label>
 //      <div class="input-group">
 //          <span class="input-group-text">$</span>
@@ -188,11 +188,11 @@ Bootforms allows you to create input groups.
 With a button appended.
 
 ```php
-//  <div class="mb-3">
+//  <div class="mb-5">
 //      <label for="email">Email</label>
 //      <div class="input-group">
 //          <input type="text" name="email" id="email" class="form-control">
-//          <button type="submit" class="btn btn-primary">OK</button>
+//          <button type="submit" class="btn-solid theme-primary">OK</button>
 //      </div>
 //  </div>
 {!! BootForm::inputGroup('Email', 'email')->afterAddon(BootForm::submit('OK')) !!}
@@ -205,7 +205,7 @@ Another nice thing about BootForms is that it will automatically add error state
 Essentially, this takes code that would normally look like this:
 
 ```php
-<div class="mb-3">
+<div class="mb-5">
   <label for="first_name" class="form-label">First Name</label>
   <input type="text" class="form-control {!! $errors->has('first_name') ? 'is-invalid' : '' !!}" id="first_name">
   {!! $errors->first('first_name', '<div class="invalid-feedback">:message</div>') !!}
