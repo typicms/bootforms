@@ -102,9 +102,7 @@ class BasicFormBuilder
 
     public function radio(string $label, string $name, ?string $value = null): GroupWrapper|OffsetFormGroup
     {
-        if (is_null($value)) {
-            $value = $label;
-        }
+        $value ??= $label;
 
         $control = $this->builder->radio($name, $value);
 

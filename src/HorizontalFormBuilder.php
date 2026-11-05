@@ -103,9 +103,7 @@ class HorizontalFormBuilder extends BasicFormBuilder
 
     public function radio(string $label, string $name, int|string|null $value = null): OffsetFormGroup
     {
-        if (is_null($value)) {
-            $value = $label;
-        }
+        $value ??= $label;
 
         $control = $this->builder->radio($name, $value);
         $checkGroup = $this->checkGroup($label, $name, $control);
