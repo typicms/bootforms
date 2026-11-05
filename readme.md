@@ -9,13 +9,13 @@ BootForms was originally created by [Adam Wathan](https://github.com/adamwathan)
 
 - [Installation](#installing-with-composer)
 - [Using BootForms](#using-bootforms)
-  - [Basic Usage](#basic-usage)
-  - [Customizing Elements](#customizing-elements)
-  - [Reduced Boilerplate](#reduced-boilerplate)
-  - [Input Groups](#input-groups)
-  - [Automatic Validation State](#automatic-validation-state)
-  - [Horizontal Forms](#horizontal-forms)
-  - [Additional Tips](#additional-tips)
+    - [Basic Usage](#basic-usage)
+    - [Customizing Elements](#customizing-elements)
+    - [Reduced Boilerplate](#reduced-boilerplate)
+    - [Input Groups](#input-groups)
+    - [Automatic Validation State](#automatic-validation-state)
+    - [Horizontal Forms](#horizontal-forms)
+    - [Additional Tips](#additional-tips)
 - [Related Resources](#related-resources)
 
 ## Installing with Composer
@@ -133,27 +133,47 @@ Typical Bootstrap form boilerplate might look something like this:
 
 ```html
 <form>
-  <div class="mb-5">
-    <label for="first_name" class="form-label">First Name</label>
-    <input type="text" class="form-control" name="first_name" id="first_name" />
-  </div>
-  <div class="mb-5">
-    <label for="last_name" class="form-label">Last Name</label>
-    <input type="text" class="form-control" name="last_name" id="last_name" />
-  </div>
-  <div class="mb-5">
-    <label for="date_of_birth" class="form-label">Date of Birth</label>
-    <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" />
-  </div>
-  <div class="mb-5">
-    <label for="email" class="form-label">Email address</label>
-    <input type="email" class="form-control" name="email" id="email" />
-  </div>
-  <div class="mb-5">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" name="password" id="password" />
-  </div>
-  <button type="submit" class="btn-solid theme-primary">Submit</button>
+    <div class="mb-5">
+        <label for="first_name" class="form-label">First Name</label>
+        <input
+            type="text"
+            class="form-control"
+            name="first_name"
+            id="first_name"
+        />
+    </div>
+    <div class="mb-5">
+        <label for="last_name" class="form-label">Last Name</label>
+        <input
+            type="text"
+            class="form-control"
+            name="last_name"
+            id="last_name"
+        />
+    </div>
+    <div class="mb-5">
+        <label for="date_of_birth" class="form-label">Date of Birth</label>
+        <input
+            type="date"
+            class="form-control"
+            name="date_of_birth"
+            id="date_of_birth"
+        />
+    </div>
+    <div class="mb-5">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" name="email" id="email" />
+    </div>
+    <div class="mb-5">
+        <label for="password" class="form-label">Password</label>
+        <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+        />
+    </div>
+    <button type="submit" class="btn-solid theme-primary">Submit</button>
 </form>
 ```
 
